@@ -21,10 +21,18 @@ public class TelnetServerThread implements Runnable {
                 PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true)
         ) {
             writer.println("Welcome to the Telnet server!");
+            writer.print("> ");
+            writer.flush();
 
             String line;
             while ((line = reader.readLine()) != null) {
+                if(line.equals("exit")) {
+                    break;
+                }
                 writer.println("You entered: " + line);
+                // send > to client
+                writer.print("> ");
+                writer.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();
